@@ -5,6 +5,10 @@
 
     public static class IoManager
     {
+        /// <summary>
+        /// Traverse folders in order.
+        /// </summary>
+        /// <param name="path">Directory path.</param>
         public static void TraverseDirectory(string path)
         {
             OutputWriter.WriteEmptyLine();

@@ -42,8 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IoManager.cs" />
-    <Compile Include="OutputWriter.cs" />
+    <Compile Include="Exceptions\ExceptionMessages.cs" />
+    <Compile Include="IO\IoManager.cs" />
+    <Compile Include="IO\OutputWriter.cs" />
+    <Compile Include="Repositories\StudentsRepository.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

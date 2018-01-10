@@ -1,6 +1,7 @@
 ﻿namespace BashSoft
 {
     using System;
+    using System.Collections.Generic;
 
     public static class OutputWriter
     {
@@ -31,6 +32,15 @@
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(message);
             Console.ForegroundColor = currentColor;
+        }
+
+        /// <summary>
+        /// Print students data.
+        /// </summary>
+        /// <param name="students">Student for printing data.</param>
+        public static void PrintStudent(KeyValuePair<string, List<int>> students)
+        {
+            WriteMessageOnNewLine($"{students.Key} - {string.Join(", ", students.Value)}");
         }
     }
 }
