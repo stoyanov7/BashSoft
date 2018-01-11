@@ -2,9 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using Exceptions;
     using IO;
+    using StaticData;
 
     public static class StudentsRepository
     {
@@ -19,10 +21,16 @@
         /// <summary>
         /// Initialize and fill the data structure, if it is not initialized yet, reads the data.
         /// </summary>
-        public static void InitializeData()
+        public static void InitializeData(string fileName = null)
         {
             if (!isDataInitialized)
             {
+                if (fileName != null)
+                {
+                    ReadData(fileName);
+                    return;
+                }
+
                 OutputWriter.WriteMessageOnNewLine("Reading data...");
                 studentsByCourse = new Dictionary<string, Dictionary<string, List<int>>>();
                 ReadData();
@@ -97,6 +105,47 @@
 
             isDataInitialized = true;
             OutputWriter.WriteMessageOnNewLine("Data read!");
+        }
+
+        private static void ReadData(string fileName)
+        {
+            var path = $"{SessionData.CurrentPath}\\{fileName}";
+
+            if (File.Exists(path))
+            {
+                var allInputLines = File.ReadAllLines(path);
+
+                for (var line = 0; line < allInputLines.Length; line++)
+                {
+                    if (!string.IsNullOrEmpty(allInputLines[line]))
+                    {
+                        var data = allInputLines[line].Split(' ');
+                        var course = data[0];
+                        var student = data[1];
+                        var mark = int.Parse(data[2]);
+
+                        if (!studentsByCourse.ContainsKey(course))
+                        {
+                            studentsByCourse[course] = new Dictionary<string, List<int>>();
+                        }
+
+                        if (!studentsByCourse[course].ContainsKey(student))
+                        {
+                            studentsByCourse[course][student] = new List<int>();
+                        }
+
+                        studentsByCourse[course][student].Add(mark);
+                    }
+                    else
+                    {
+                        OutputWriter.DisplayException(ExceptionMessages.InvalidPath);
+                    }
+
+                }
+
+                isDataInitialized = true;
+                OutputWriter.WriteMessageOnNewLine("Data read!");
+            }
         }
 
         /// <summary>
