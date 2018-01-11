@@ -1,5 +1,6 @@
 ﻿namespace BashSoft.IO
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using Exceptions;
@@ -37,11 +38,18 @@
                 // Print the folder path
                 OutputWriter.WriteMessageOnNewLine($"{new string('-', identation)} {currentPath}");
 
-                foreach (var file in Directory.GetFiles(SessionData.CurrentPath))
+                try
                 {
-                    var indexOfLastSlash = file.LastIndexOf("\\");
-                    var fileName = file.Substring(indexOfLastSlash);
-                    OutputWriter.WriteMessageOnNewLine(new string('-', indexOfLastSlash) + fileName);
+                    foreach (var file in Directory.GetFiles(SessionData.CurrentPath))
+                    {
+                        var indexOfLastSlash = file.LastIndexOf("\\");
+                        var fileName = file.Substring(indexOfLastSlash);
+                        OutputWriter.WriteMessageOnNewLine(new string('-', indexOfLastSlash) + fileName);
+                    }
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    OutputWriter.DisplayException(ExceptionMessages.UnauthorizedAccessExceptionMessage);
                 }
             }
         }
@@ -60,7 +68,15 @@
                 return;
             }
 
-            Directory.CreateDirectory(path);
+            try
+            {
+                Directory.CreateDirectory(path);
+            }
+            catch (ArgumentException)
+            {
+                OutputWriter.DisplayException(ExceptionMessages.ForbiddenSymbolsContainedInName);   
+            }
+
             OutputWriter.WriteMessageOnNewLine("Directory created!");
         }
 
@@ -72,10 +88,18 @@
         {
             if (relativePath == "..")
             {
-                var currentPath = SessionData.CurrentPath;
-                var indexOfLastSlash = currentPath.LastIndexOf("\\");
-                var newPath = currentPath.Substring(0, indexOfLastSlash);
-                SessionData.CurrentPath = newPath;
+
+                try
+                {
+                    var currentPath = SessionData.CurrentPath;
+                    var indexOfLastSlash = currentPath.LastIndexOf("\\");
+                    var newPath = currentPath.Substring(0, indexOfLastSlash);
+                    SessionData.CurrentPath = newPath;
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    OutputWriter.DisplayException(ExceptionMessages.UnableToGoHigherInPartitionHierarchy);
+                }
                 
             }
             else
