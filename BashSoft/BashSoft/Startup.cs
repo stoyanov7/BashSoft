@@ -11,7 +11,7 @@
         /// <param name="args">Arguments.</param>
         public static void Main(string[] args)
         {
-            // IoManager.TraverseDirectory(@"C:\Users\Joro\Desktop");
+            // IoManager.TraverseDirectory(3);
 
             // StudentsRepository.InitializeData();
             // StudentsRepository.GetAllStudentsFromCourse("Unity");

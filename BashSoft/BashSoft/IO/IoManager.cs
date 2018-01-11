@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.IO;
+    using Exceptions;
     using StaticData;
 
     public static class IoManager
@@ -9,13 +10,13 @@
         /// <summary>
         /// Traverse folders in order.
         /// </summary>
-        /// <param name="path">Directory path.</param>
-        public static void TraverseDirectory(string path)
+        /// <param name="depth">Directory depth.</param>
+        public static void TraverseDirectory(int depth)
         {
             OutputWriter.WriteEmptyLine();
-            var initialIdentation = path.Split('\\').Length;
+            var initialIdentation = SessionData.CurrentPath.Split('\\').Length;
             var subFolders = new Queue<string>();
-            subFolders.Enqueue(path);
+            subFolders.Enqueue(SessionData.CurrentPath);
 
             while (subFolders.Count != 0)
             {
@@ -23,13 +24,24 @@
                 var currentPath = subFolders.Dequeue();
                 var identation = currentPath.Split('\\').Length - initialIdentation;
 
-                // Print the folder path
-                OutputWriter.WriteMessageOnNewLine($"{new string('-', identation)} {currentPath}");
+                if (depth - identation < 0)
+                {
+                    break;
+                }
 
                 foreach (var directoryPath in Directory.GetDirectories(currentPath))
                 {
-                    // Add all it's subfolders to the end of the queue 
                     subFolders.Enqueue(directoryPath);
+                }
+
+                // Print the folder path
+                OutputWriter.WriteMessageOnNewLine($"{new string('-', identation)} {currentPath}");
+
+                foreach (var file in Directory.GetFiles(SessionData.CurrentPath))
+                {
+                    var indexOfLastSlash = file.LastIndexOf("\\");
+                    var fileName = file.Substring(indexOfLastSlash);
+                    OutputWriter.WriteMessageOnNewLine(new string('-', indexOfLastSlash) + fileName);
                 }
             }
         }
@@ -50,6 +62,43 @@
 
             Directory.CreateDirectory(path);
             OutputWriter.WriteMessageOnNewLine("Directory created!");
+        }
+
+        /// <summary>
+        /// Moves forwards and backwards in the path. 
+        /// </summary>
+        /// <param name="relativePath">Relative path.</param>
+        public static void ChangeCurrentDirectoryRelative(string relativePath)
+        {
+            if (relativePath == "..")
+            {
+                var currentPath = SessionData.CurrentPath;
+                var indexOfLastSlash = currentPath.LastIndexOf("\\");
+                var newPath = currentPath.Substring(0, indexOfLastSlash);
+                SessionData.CurrentPath = newPath;
+                
+            }
+            else
+            {
+                var currenPath = SessionData.CurrentPath;
+                currenPath += "\\" + relativePath;
+                ChangeCurrentDirectoryAbsolute(currenPath);
+            }
+        }
+
+        /// <summary>
+        /// Get absolute path and goes directly to the path.
+        /// </summary>
+        /// <param name="absolutePath">Absolute path.</param>
+        public static void ChangeCurrentDirectoryAbsolute(string absolutePath)
+        {
+            if (!Directory.Exists(absolutePath))
+            {
+                OutputWriter.DisplayException(ExceptionMessages.InvalidPath);
+                return;
+            }
+
+            SessionData.CurrentPath = absolutePath;
         }
     }
 }
