@@ -45,9 +45,11 @@
     <Compile Include="Exceptions\ExceptionMessages.cs" />
     <Compile Include="IO\IoManager.cs" />
     <Compile Include="IO\OutputWriter.cs" />
+    <Compile Include="Judge\Tester.cs" />
     <Compile Include="Repositories\StudentsRepository.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StaticData\SessionData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

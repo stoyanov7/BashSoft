@@ -4,13 +4,14 @@
     using System.Collections.Generic;
     using System.Linq;
     using Exceptions;
+    using IO;
 
     public static class StudentsRepository
     {
         /// <summary>
         /// Boolean flag for whether the data structure is initialized.
         /// </summary>
-        public static bool isDataInitialized = false;
+        private static bool isDataInitialized = false;
 
         // Dictionary<courseName, Dictionary<userName, scoresOnTasks>>> 
         private static Dictionary<string, Dictionary<string, List<int>>> studentsByCourse;
