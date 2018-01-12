@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using Exceptions;
     using IO;
     using StaticData;
@@ -25,19 +26,13 @@
         {
             if (!isDataInitialized)
             {
-                if (fileName != null)
-                {
-                    ReadData(fileName);
-                    return;
-                }
-
                 OutputWriter.WriteMessageOnNewLine("Reading data...");
                 studentsByCourse = new Dictionary<string, Dictionary<string, List<int>>>();
-                ReadData();
+                ReadData(fileName);
             }
             else
             {
-                OutputWriter.DisplayException(ExceptionMessages.DataAlreadyInitialisedException);
+                OutputWriter.WriteMessageOnNewLine(ExceptionMessages.DataAlreadyInitialisedException);
             }
         }
 
@@ -113,39 +108,39 @@
 
             if (File.Exists(path))
             {
+                const string pattern = @"([A-Z][a-zA-Z#+]*_[A-Z][a-z]{2}_\d{4})\s+([A-Z][a-z]{0,3}\d{2}_\d{2,4})\s+(\d+)";
+                var regex = new Regex(pattern);
                 var allInputLines = File.ReadAllLines(path);
 
                 for (var line = 0; line < allInputLines.Length; line++)
                 {
-                    if (!string.IsNullOrEmpty(allInputLines[line]))
+                    if (!string.IsNullOrEmpty(allInputLines[line]) && regex.IsMatch(allInputLines[line]))
                     {
-                        var data = allInputLines[line].Split(' ');
-                        var course = data[0];
-                        var student = data[1];
-                        var mark = int.Parse(data[2]);
+                        var currentMatch = regex.Match(allInputLines[line]);
+                        var courseName = currentMatch.Groups[1].Value;
+                        var username = currentMatch.Groups[2].Value;
+                        var hasParsedScore = int.TryParse(currentMatch.Groups[3].Value, out int studentScoreOnTask);
 
-                        if (!studentsByCourse.ContainsKey(course))
+                        if (hasParsedScore && studentScoreOnTask >= 0 && studentScoreOnTask <= 100)
                         {
-                            studentsByCourse[course] = new Dictionary<string, List<int>>();
+                            if (!studentsByCourse.ContainsKey(courseName))
+                            {
+                                studentsByCourse.Add(courseName, new Dictionary<string, List<int>>());
+                            }
+
+                            if (!studentsByCourse[courseName].ContainsKey(username))
+                            {
+                                studentsByCourse[courseName].Add(username, new List<int>());
+                            }
+
+                            studentsByCourse[courseName][username].Add(studentScoreOnTask);
                         }
-
-                        if (!studentsByCourse[course].ContainsKey(student))
-                        {
-                            studentsByCourse[course][student] = new List<int>();
-                        }
-
-                        studentsByCourse[course][student].Add(mark);
                     }
-                    else
-                    {
-                        OutputWriter.DisplayException(ExceptionMessages.InvalidPath);
-                    }
-
                 }
-
-                isDataInitialized = true;
-                OutputWriter.WriteMessageOnNewLine("Data read!");
             }
+
+            isDataInitialized = true;
+            OutputWriter.WriteMessageOnNewLine("Data read!");
         }
 
         /// <summary>

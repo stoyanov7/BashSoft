@@ -40,6 +40,9 @@
                 case "readDb":
                     TryReadDatabaseFromFile(input, data);
                     break;
+                case "show":
+                    TryShowWantedData(input, data);
+                    break;
                 case "help":
                     TryGetHelp(input, data);
                     break;
@@ -177,6 +180,30 @@
             
             var fileName = data[1];
             StudentsRepository.InitializeData(fileName);
+        }
+
+        /// <summary>
+        /// Try show wanted data.
+        /// </summary>
+        /// <param name="input">Input.</param>
+        /// <param name="data">Data.</param>
+        private static void TryShowWantedData(string input, string[] data)
+        {
+            if (data.Length == 2)
+            {
+                var courseName = data[1];
+                StudentsRepository.GetAllStudentsFromCourse(courseName);
+            }
+            else if (data.Length == 3)
+            {
+                var courseName = data[1];
+                var userName = data[2];
+                StudentsRepository.GetStudentScoresFromCourse(courseName, userName);
+            }
+            else
+            {
+                DisplayInvalidCommandMessage(input);
+            }
         }
 
         /// <summary>
