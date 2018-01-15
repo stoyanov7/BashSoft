@@ -19,6 +19,32 @@
         // Dictionary<courseName, Dictionary<userName, scoresOnTasks>>> 
         private static Dictionary<string, Dictionary<string, List<int>>> studentsByCourse;
 
+        public static void FilterAndTake(string courseName, string givenFilter, int? studentsToTake = null)
+        {
+            if (IsQueryForCoursePossible(courseName))
+            {
+                if (studentsToTake == null)
+                {
+                    studentsToTake = studentsByCourse[courseName].Count;
+                }
+
+                RepositoryFilters.FilterAndTake(studentsByCourse[courseName], givenFilter, studentsToTake.Value);
+            }
+        }
+
+        public static void OrderAndTake(string courseName, string comparison, int? studentsToTake = null)
+        {
+            if (IsQueryForCoursePossible(courseName))
+            {
+                if (studentsToTake == null)
+                {
+                    studentsToTake = studentsByCourse[courseName].Count;
+                }
+
+                RepositorySorters.OrderAndTake(studentsByCourse[courseName], comparison, studentsToTake.Value);
+            }
+        }
+
         /// <summary>
         /// Initialize and fill the data structure, if it is not initialized yet, reads the data.
         /// </summary>
@@ -66,50 +92,14 @@
             }
         }
 
-        /// <summary>
-        /// Read the information for students.
-        /// </summary>
-        private static void ReadData()
-        {
-            var input = Console.ReadLine();
-
-            while (!string.IsNullOrEmpty(input))
-            {
-                var tokens = input.Split(' ').ToArray();
-                var course = tokens[0];
-                var student = tokens[1];
-                var mark = int.Parse(tokens[2]);
-
-                // Add the course if the don't exist
-                if (!studentsByCourse.ContainsKey(course))
-                {
-                    studentsByCourse.Add(course, new Dictionary<string, List<int>>());
-                }
-
-                // Add the student if the don't exist
-                if (!studentsByCourse[course].ContainsKey(student))
-                {
-                    studentsByCourse[course].Add(student, new List<int>());
-                }
-
-                // Add the marks
-                studentsByCourse[course][student].Add(mark);
-
-                input = Console.ReadLine();
-            }
-
-            isDataInitialized = true;
-            OutputWriter.WriteMessageOnNewLine("Data read!");
-        }
-
         private static void ReadData(string fileName)
         {
             var path = $"{SessionData.CurrentPath}\\{fileName}";
 
             if (File.Exists(path))
             {
-                const string pattern = @"([A-Z][a-zA-Z#+]*_[A-Z][a-z]{2}_\d{4})\s+([A-Z][a-z]{0,3}\d{2}_\d{2,4})\s+(\d+)";
-                var regex = new Regex(pattern);
+                const string Pattern = @"([A-Z][a-zA-Z#+]*_[A-Z][a-z]{2}_\d{4})\s+([A-Z][a-z]{0,3}\d{2}_\d{2,4})\s+(\d+)";
+                var regex = new Regex(Pattern);
                 var allInputLines = File.ReadAllLines(path);
 
                 for (var line = 0; line < allInputLines.Length; line++)
