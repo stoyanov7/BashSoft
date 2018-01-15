@@ -8,6 +8,9 @@
         private const string QuitCommand = "quit";
         private const string ExitCommand = "exit";
 
+        /// <summary>
+        /// Reading commands from console.
+        /// </summary>
         public static void StartReadingCommands()
         {
             OutputWriter.WriteMessage($"{SessionData.CurrentPath}>");

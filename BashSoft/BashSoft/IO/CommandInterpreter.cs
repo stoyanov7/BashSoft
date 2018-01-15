@@ -43,6 +43,12 @@
                 case "show":
                     TryShowWantedData(input, data);
                     break;
+                case "filter":
+                    TryFilterAndTake(input, data);
+                    break;
+                case "order":
+                    TryOrderAndTake(input, data);
+                    break;
                 case "help":
                     TryGetHelp(input, data);
                     break;
@@ -203,6 +209,106 @@
             else
             {
                 DisplayInvalidCommandMessage(input);
+            }
+        }
+
+        /// <summary>
+        /// Try filter and take student data.
+        /// </summary>
+        /// <param name="input">Input.</param>
+        /// <param name="data">Data.</param>
+        private static void TryFilterAndTake(string input, string[] data)
+        {
+            if (data.Length == 5)
+            {
+                var courseName = data[1];
+                var filter = data[2];
+                var takeCommand = data[3].ToLower();
+                var takeQuantity = data[4].ToLower();
+            
+                TryParseParametersForFilterAndTake(takeCommand, takeQuantity, courseName, filter);
+            }
+            else
+            {
+                DisplayInvalidCommandMessage(input);
+            }
+        }
+
+        private static void TryParseParametersForFilterAndTake(string takeCommand, string takeQuantity, string courseName, string filter)
+        {
+            if (takeCommand == "take")
+            {
+                if (takeQuantity == "all")
+                {
+                    StudentsRepository.FilterAndTake(courseName, filter);
+                }
+                else
+                {
+                    var hasParsed = int.TryParse(takeQuantity, out int studentsToTake);
+
+                    if (hasParsed)
+                    {
+                        StudentsRepository.FilterAndTake(courseName, filter, studentsToTake);
+                    }
+                    else
+                    {
+                        OutputWriter.DisplayException(ExceptionMessages.InvalidTakeQuantityParameter);
+                    }
+                }
+            }
+            else
+            {
+                OutputWriter.DisplayException(ExceptionMessages.InvalidTakeQuantityParameter);
+            }
+        }
+
+        /// <summary>
+        /// Try order and take student data.
+        /// </summary>
+        /// <param name="input">Input.</param>
+        /// <param name="data">Data.</param>
+        private static void TryOrderAndTake(string input, string[] data)
+        {
+            if (data.Length == 5)
+            {
+                var orderCommand = data[0].ToLower();
+                var courseName = data[1];
+                var comparison = data[2];
+                var takeQuantity = data[4].ToLower();
+
+                TryParseParametersForOrderAndTake(orderCommand, takeQuantity, courseName, comparison);
+            }
+            else
+            {
+                DisplayInvalidCommandMessage(input);
+            }
+        }
+
+        private static void TryParseParametersForOrderAndTake(string orderCommand, string takeQuantity, string courseName, string comparison)
+        {
+            if (orderCommand == "order")
+            {
+                if (takeQuantity == "all")
+                {
+                    StudentsRepository.OrderAndTake(courseName, comparison);
+                }
+                else
+                {
+                    var hasParsed = int.TryParse(takeQuantity, out int studentsToTake);
+
+                    if (hasParsed)
+                    {
+                        StudentsRepository.OrderAndTake(courseName, comparison, studentsToTake);
+                    }
+                    else
+                    {
+                        OutputWriter.DisplayException(ExceptionMessages.InvalidTakeQuantityParameter);
+                    }
+                }
+            }
+            else
+            {
+                OutputWriter.DisplayException(ExceptionMessages.InvalidTakeQuantityParameter);
             }
         }
 

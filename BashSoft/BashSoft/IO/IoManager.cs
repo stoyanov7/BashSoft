@@ -88,7 +88,6 @@
         {
             if (relativePath == "..")
             {
-
                 try
                 {
                     var currentPath = SessionData.CurrentPath;
@@ -100,7 +99,6 @@
                 {
                     OutputWriter.DisplayException(ExceptionMessages.UnableToGoHigherInPartitionHierarchy);
                 }
-                
             }
             else
             {
