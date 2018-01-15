@@ -48,6 +48,8 @@
     <Compile Include="IO\IoManager.cs" />
     <Compile Include="IO\OutputWriter.cs" />
     <Compile Include="Judge\Tester.cs" />
+    <Compile Include="Models\Course.cs" />
+    <Compile Include="Models\Student.cs" />
     <Compile Include="Repositories\RepositoryFilter.cs" />
     <Compile Include="Repositories\RepositorySorter.cs" />
     <Compile Include="Repositories\StudentsRepository.cs" />
@@ -58,5 +60,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

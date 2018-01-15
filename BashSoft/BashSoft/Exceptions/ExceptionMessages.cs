@@ -37,5 +37,13 @@
 
         public const string InvalidTakeQuantityParameter =
             "The take command expected does not match the format wanted!";
+
+        public const string StudentAlreadyEnrolledInGivenCourse = "The {0} already exists in {1}.";
+
+        public const string NotEnrolledInCourse = 
+            "Student must be enrolled in a course before you set his mark.";
+
+        public const string InvalidNumberOfScores = 
+            "The number of scores for the given course is greater than the possible.";
     }
 }
