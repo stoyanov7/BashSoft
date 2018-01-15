@@ -12,6 +12,8 @@
         /// Traverse folders in order.
         /// </summary>
         /// <param name="depth">Directory depth.</param>
+        /// <exception cref="UnauthorizedAccessException">
+        /// If The folder/file you are trying to get access needs a higher level of rights.</exception>
         public void TraverseDirectory(int depth)
         {
             OutputWriter.WriteEmptyLine();
@@ -57,7 +59,9 @@
         /// <summary>
         /// Create directory in current path.
         /// </summary>
-        /// <param name="folderName">The name of the folder</param>
+        /// <param name="folderName">Folder name.</param>
+        /// <exception cref="ArgumentException">
+        /// If the folder name contains symbols that are not allowed to be used.</exception>
         public void CreateDirectoryInCurrentFolder(string folderName)
         {
             var path = SessionData.CurrentPath + "\\" + folderName;
@@ -81,9 +85,10 @@
         }
 
         /// <summary>
-        /// Moves forwards and backwards in the path. 
+        /// Moves forwards and backwards in the path.
         /// </summary>
         /// <param name="relativePath">Relative path.</param>
+        /// <exception cref="ArgumentOutOfRangeException">If the path is cannot go in higher level.</exception>
         public void ChangeCurrentDirectoryRelative(string relativePath)
         {
             if (relativePath == "..")
@@ -104,7 +109,7 @@
             {
                 var currenPath = SessionData.CurrentPath;
                 currenPath += "\\" + relativePath;
-                ChangeCurrentDirectoryAbsolute(currenPath);
+                this.ChangeCurrentDirectoryAbsolute(currenPath);
             }
         }
 

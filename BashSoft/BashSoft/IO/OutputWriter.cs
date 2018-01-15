@@ -38,7 +38,7 @@
         /// Print students data.
         /// </summary>
         /// <param name="students">Student for printing data.</param>
-        public static void PrintStudent(KeyValuePair<string, List<int>> students)
+        public static void PrintStudent(KeyValuePair<string, double> students)
         {
             WriteMessageOnNewLine($"{students.Key} - {string.Join(", ", students.Value)}");
         }

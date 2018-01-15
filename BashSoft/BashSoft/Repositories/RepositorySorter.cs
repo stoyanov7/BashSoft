@@ -10,24 +10,24 @@
         /// <summary>
         /// Order and take students data.
         /// </summary>
-        /// <param name="wantedData">Wanted data.</param>
+        /// <param name="studentsMarks">Wanted data.</param>
         /// <param name="comparison">Comparasion.</param>
         /// <param name="studentToTake">Students to take.</param>
-        public void OrderAndTake(Dictionary<string, List<int>> wantedData, string comparison, int studentToTake)
+        public void OrderAndTake(Dictionary<string, double> studentsMarks, string comparison, int studentToTake)
         {
             comparison = comparison.ToLower();
 
             switch (comparison)
             {
                 case "ascending":
-                    PrintStudents(wantedData
-                        .OrderBy(x => x.Value.Sum())
+                    this.PrintStudents(studentsMarks
+                        .OrderBy(x => x.Value)
                         .Take(studentToTake)
                         .ToDictionary(pair => pair.Key, pair => pair.Value));
                     break;
                 case "descending":
-                    PrintStudents(wantedData
-                        .OrderByDescending(x => x.Value.Sum())
+                    this.PrintStudents(studentsMarks
+                        .OrderByDescending(x => x.Value)
                         .Take(studentToTake)
                         .ToDictionary(pair => pair.Key, pair => pair.Value));
                     break;
@@ -37,7 +37,11 @@
             }
         }
 
-        private void PrintStudents(Dictionary<string, List<int>> studentsSorted)
+        /// <summary>
+        /// Print students.
+        /// </summary>
+        /// <param name="studentsSorted">Students for printing.</param>
+        private void PrintStudents(Dictionary<string, double> studentsSorted)
         {
             foreach (var kvp in studentsSorted)
             {

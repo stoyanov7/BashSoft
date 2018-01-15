@@ -8,8 +8,12 @@
         private const string QuitCommand = "quit";
         private const string ExitCommand = "exit";
 
-        private CommandInterpreter commandInterpreter;
+        private readonly CommandInterpreter commandInterpreter;
 
+        /// <summary>
+        /// Create a new instance of <see cref="CommandInterpreter"/>
+        /// </summary>
+        /// <param name="commandInterpreter">Command interpreter.</param>
         public InputReader(CommandInterpreter commandInterpreter)
         {
             this.commandInterpreter = commandInterpreter;

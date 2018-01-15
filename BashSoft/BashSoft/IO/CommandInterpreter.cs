@@ -326,6 +326,11 @@
             }
         }
 
+        /// <summary>
+        /// Try to drop the database.
+        /// </summary>
+        /// <param name="input">Input.</param>
+        /// <param name="data">Data.</param>
         private void TryDropDatabase(string input, string[] data)
         {
             if (data.Length != 1)
@@ -364,7 +369,7 @@
         /// <summary>
         /// Displays an invalid command message.
         /// </summary>
-        /// <param name="input">Input command.</param>
+        /// <param studentByName="input">Input command.</param>
         private void DisplayInvalidCommandMessage(string input)
         {
             OutputWriter.DisplayException($"The command {input} is invalid");

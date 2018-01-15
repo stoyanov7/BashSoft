@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Exceptions;
     using IO;
 
@@ -11,21 +10,21 @@
         /// <summary>
         /// Filter and take students data.
         /// </summary>
-        /// <param name="wantedData">Wanted data.</param>
+        /// <param name="studentsWithMarks">Wanted data.</param>
         /// <param name="wantedFilter">Wanted filter.</param>
         /// <param name="studentsToTake">Students to take.</param>
-        public void FilterAndTake(Dictionary<string, List<int>> wantedData, string wantedFilter, int studentsToTake)
+        public void FilterAndTake(Dictionary<string, double> studentsWithMarks, string wantedFilter, int studentsToTake)
         {
             switch (wantedFilter)
             {
                 case "excellent":
-                    FilterAndTake(wantedData, x => x >= 5, studentsToTake);
+                    this.FilterAndTake(studentsWithMarks, x => x >= 5, studentsToTake);
                     break;
                 case "average":
-                    FilterAndTake(wantedData, x => x < 5 && x >= 3.5, studentsToTake);
+                    this.FilterAndTake(studentsWithMarks, x => x < 5 && x >= 3.5, studentsToTake);
                     break;
                 case "poor":
-                    FilterAndTake(wantedData, x => x < 3.5, studentsToTake);
+                    this.FilterAndTake(studentsWithMarks, x => x < 3.5, studentsToTake);
                     break;
                 default:
                     OutputWriter.DisplayException(ExceptionMessages.InvalidStudentFilter);
@@ -33,22 +32,20 @@
             }
         }
 
-        private void FilterAndTake(Dictionary<string, List<int>> wantedData, Predicate<double> givenFilter, int studentsToTake)
+        private void FilterAndTake(Dictionary<string, double> studentsWithMarks, Predicate<double> givenFilter, int studentsToTake)
         {
             var counterForPrinted = 0;
 
-            foreach (var userName_Points in wantedData)
+            foreach (var studentMark in studentsWithMarks)
             {
                 if (counterForPrinted == studentsToTake)
                 {
                     break;
                 }
 
-                var averageMark = userName_Points.Value.Average();
-
-                if (givenFilter(averageMark))
+                if (givenFilter(studentMark.Value))
                 {
-                    OutputWriter.PrintStudent(userName_Points);
+                    OutputWriter.PrintStudent(studentMark);
                     counterForPrinted++;
                 }
             }

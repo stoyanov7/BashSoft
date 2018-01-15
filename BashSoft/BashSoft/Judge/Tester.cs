@@ -12,20 +12,22 @@
         /// </summary>
         /// <param name="userOutputPath">User output path.</param>
         /// <param name="expectedOutputPath">Expected output path.</param>
+        /// <exception cref="FileNotFoundException">
+        /// If the file is with invalid path, or does not exist.</exception>
         public void CompareContent(string userOutputPath, string expectedOutputPath)
         {
             OutputWriter.WriteMessageOnNewLine("Reading files...");
 
             try
             {
-                var mismatchesPath = GetMismatcPath(expectedOutputPath);
+                var mismatchesPath = this.GetMismatcPath(expectedOutputPath);
                 var actualOutputLines = File.ReadAllLines(userOutputPath);
                 var expectedOutputLines = File.ReadAllLines(expectedOutputPath);
 
                 var mismatches =
-                    GetLinesWithPossibleMismatches(actualOutputLines, expectedOutputLines, out bool hasMismatch);
+                    this.GetLinesWithPossibleMismatches(actualOutputLines, expectedOutputLines, out bool hasMismatch);
 
-                PrintOutput(mismatches, hasMismatch, mismatchesPath);
+                this.PrintOutput(mismatches, hasMismatch, mismatchesPath);
                 OutputWriter.WriteMessageOnNewLine("Files read!");
             }
             catch (FileNotFoundException)
@@ -54,7 +56,7 @@
         /// <param name="actualOutputLines">Actual output lines.</param>
         /// <param name="expectedOutputLines">Expected output lines.</param>
         /// <param name="hasMismatch">Has any mismatches.</param>
-        /// <returns></returns>
+        /// <returns>Array with all mismathces.</returns>
         private string[] GetLinesWithPossibleMismatches(string[] actualOutputLines, string[] expectedOutputLines, out bool hasMismatch)
         {
             hasMismatch = false;
@@ -101,6 +103,8 @@
         /// <param name="mismatches">Array with mismatches.</param>
         /// <param name="hasMismatch">Has any mismatches.</param>
         /// <param name="mismatchesPath">Mismatches path.</param>
+        /// <exception cref="DirectoryNotFoundException">
+        /// If the file is with invalid path, or does not exist.</exception>
         private void PrintOutput(string[] mismatches, bool hasMismatch, string mismatchesPath)
         {   
             if (hasMismatch)
