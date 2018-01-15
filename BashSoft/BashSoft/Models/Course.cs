@@ -10,7 +10,7 @@
         public const int MaxScoreOnExamTask = 100;
 
         public string name;
-        private readonly Dictionary<string, Student> studentsByName;
+        public readonly Dictionary<string, Student> studentsByName;
 
         public Course(string name)
         {

@@ -11,7 +11,7 @@
             "The course you are trying to get does not exist in the data base!";
 
         public const string InexistingStudentInDataBase =
-            "The user name for the student you are trying to get does not exist!";
+            "The user studentByName for the student you are trying to get does not exist!";
 
         public const string InvalidPath =
             "The folder/file you are trying to access at the current address, does not exist.";
@@ -45,5 +45,8 @@
 
         public const string InvalidNumberOfScores = 
             "The number of scores for the given course is greater than the possible.";
+
+        public const string InvalidScores = 
+            "The number for the score you've entered is not in the range of 0 - 100";
     }
 }

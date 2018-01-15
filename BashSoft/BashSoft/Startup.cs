@@ -9,7 +9,7 @@
         /// <summary>
         /// Entry point of program.
         /// </summary>
-        /// <param name="args">Arguments.</param>
+        /// <param studentByName="args">Arguments.</param>
         public static void Main(string[] args)
         {
             var tester = new Tester();

@@ -18,7 +18,7 @@
             this.marksByCourseName = new Dictionary<string, double>();
         }
 
-        public void EnrollCourse(Course course)
+        public void EnrollInCourse(Course course)
         {
             if (this.enrolledCourses.ContainsKey(course.name))
             {
@@ -43,7 +43,7 @@
                 return;
             }
 
-            this.marksByCourseName[courseName] = CalculateMark(scores);
+            this.marksByCourseName[courseName] = this.CalculateMark(scores);
         }
 
         private double CalculateMark(int[] scores)
