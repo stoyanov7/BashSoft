@@ -6,13 +6,13 @@
     using Exceptions;
     using StaticData;
 
-    public static class IoManager
+    public class IoManager
     {
         /// <summary>
         /// Traverse folders in order.
         /// </summary>
         /// <param name="depth">Directory depth.</param>
-        public static void TraverseDirectory(int depth)
+        public void TraverseDirectory(int depth)
         {
             OutputWriter.WriteEmptyLine();
             var initialIdentation = SessionData.CurrentPath.Split('\\').Length;
@@ -58,7 +58,7 @@
         /// Create directory in current path.
         /// </summary>
         /// <param name="folderName">The name of the folder</param>
-        public static void CreateDirectoryInCurrentFolder(string folderName)
+        public void CreateDirectoryInCurrentFolder(string folderName)
         {
             var path = SessionData.CurrentPath + "\\" + folderName;
 
@@ -84,7 +84,7 @@
         /// Moves forwards and backwards in the path. 
         /// </summary>
         /// <param name="relativePath">Relative path.</param>
-        public static void ChangeCurrentDirectoryRelative(string relativePath)
+        public void ChangeCurrentDirectoryRelative(string relativePath)
         {
             if (relativePath == "..")
             {
@@ -112,7 +112,7 @@
         /// Get absolute path and goes directly to the path.
         /// </summary>
         /// <param name="absolutePath">Absolute path.</param>
-        public static void ChangeCurrentDirectoryAbsolute(string absolutePath)
+        public void ChangeCurrentDirectoryAbsolute(string absolutePath)
         {
             if (!Directory.Exists(absolutePath))
             {
