@@ -5,7 +5,7 @@
     using Exceptions;
     using IO;
 
-    public class Tester
+    public static class Tester
     {
         /// <summary>
         /// Compare two files and get mismatches.
@@ -55,8 +55,7 @@
         /// <param name="expectedOutputLines">Expected output lines.</param>
         /// <param name="hasMismatch">Has any mismatches.</param>
         /// <returns></returns>
-        private static string[] GetLinesWithPossibleMismatches(string[] actualOutputLines,
-            string[] expectedOutputLines, out bool hasMismatch)
+        private static string[] GetLinesWithPossibleMismatches(string[] actualOutputLines, string[] expectedOutputLines, out bool hasMismatch)
         {
             hasMismatch = false;
             var output = string.Empty;
