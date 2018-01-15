@@ -7,9 +7,20 @@
     using Repositories;
     using StaticData;
 
-    public static class CommandInterpreter
+    public class CommandInterpreter
     {
-        public static void InterpretCommand(string input)
+        private readonly Tester tester;
+        private readonly StudentsRepository studentsRepository;
+        private readonly IoManager inputOutputManager;
+
+        public CommandInterpreter(Tester tester, StudentsRepository studentsRepository, IoManager inputOutputManager)
+        {
+            this.tester = tester;
+            this.studentsRepository = studentsRepository;
+            this.inputOutputManager = inputOutputManager;
+        }
+
+        public void InterpretCommand(string input)
         {
             var data = input
                 .Split(' ')
@@ -20,40 +31,43 @@
             switch (command)
             {
                 case "open":
-                    TryOpenFile(input, data);
+                    this.TryOpenFile(input, data);
                     break;
                 case "mkdir":
-                    TryCreateDirectory(input, data);
+                    this.TryCreateDirectory(input, data);
                     break;
                 case "ls":
-                    TryTraverseFolders(input, data);
+                    this.TryTraverseFolders(input, data);
                     break;
                 case "cmp":
-                    TryCompareFiles(input, data);
+                    this.TryCompareFiles(input, data);
                     break;
                 case "cdRel":
-                    TryChangePathRelatively(input, data);
+                    this.TryChangePathRelatively(input, data);
                     break;
                 case "cdAbs":
-                    TryChangePathAbsolutely(input, data);
+                    this.TryChangePathAbsolutely(input, data);
                     break;
                 case "readDb":
-                    TryReadDatabaseFromFile(input, data);
+                    this.TryReadDatabaseFromFile(input, data);
                     break;
                 case "show":
-                    TryShowWantedData(input, data);
+                    this.TryShowWantedData(input, data);
                     break;
                 case "filter":
-                    TryFilterAndTake(input, data);
+                    this.TryFilterAndTake(input, data);
                     break;
                 case "order":
-                    TryOrderAndTake(input, data);
+                    this.TryOrderAndTake(input, data);
+                    break;
+                case "dropDb:":
+                    this.TryDropDatabase(input, data);
                     break;
                 case "help":
-                    TryGetHelp(input, data);
+                    this.TryGetHelp(input, data);
                     break;
                 default:
-                    DisplayInvalidCommandMessage(input);
+                    this.DisplayInvalidCommandMessage(input);
                     break;
             }
         }
@@ -63,11 +77,11 @@
         /// </summary>
         /// <param name="input">Input.</param>
         /// <param name="data">Data.</param>
-        private static void TryOpenFile(string input, string[] data)
+        private void TryOpenFile(string input, string[] data)
         {
             if (data.Length != 2)
             {
-                DisplayInvalidCommandMessage(input);
+                this.DisplayInvalidCommandMessage(input);
                 return;
             }
 
@@ -80,16 +94,16 @@
         /// </summary>
         /// <param name="input">Input.</param>
         /// <param name="data">Data.</param>
-        private static void TryCreateDirectory(string input, string[] data)
+        private void TryCreateDirectory(string input, string[] data)
         {
             if (data.Length != 2)
             {
-                DisplayInvalidCommandMessage(input);
+                this.DisplayInvalidCommandMessage(input);
                 return;
             }
 
             var folderName = data[1];
-            IoManager.CreateDirectoryInCurrentFolder(folderName);
+            this.inputOutputManager.CreateDirectoryInCurrentFolder(folderName);
         }
 
         /// <summary>
@@ -97,11 +111,11 @@
         /// </summary>
         /// <param name="input">Input.</param>
         /// <param name="data">Data.</param>
-        private static void TryTraverseFolders(string input, string[] data)
+        private void TryTraverseFolders(string input, string[] data)
         {
             if (data.Length == 1)
             {
-                IoManager.TraverseDirectory(0);
+                this.inputOutputManager.TraverseDirectory(0);
             }
             else if (data.Length == 2)
             {
@@ -109,7 +123,7 @@
 
                 if (hasParsed)
                 {
-                    IoManager.TraverseDirectory(depth);
+                    this.inputOutputManager.TraverseDirectory(depth);
                 }
                 else
                 {
@@ -123,17 +137,17 @@
         /// </summary>
         /// <param name="input">Input.</param>
         /// <param name="data">Data.</param>
-        private static void TryCompareFiles(string input, string[] data)
+        private void TryCompareFiles(string input, string[] data)
         {
             if (data.Length == 3)
             {
                 var firstPath = data[1];
                 var secondPath = data[2];
-                Tester.CompareContent(firstPath, secondPath);
+                this.tester.CompareContent(firstPath, secondPath);
             }
             else
             {
-                DisplayInvalidCommandMessage(input);
+                this.DisplayInvalidCommandMessage(input);
             }
         }
 
@@ -142,16 +156,16 @@
         /// </summary>
         /// <param name="input">Input.</param>
         /// <param name="data">Data.</param>
-        private static void TryChangePathRelatively(string input, string[] data)
+        private void TryChangePathRelatively(string input, string[] data)
         {
             if (data.Length != 2)
             {
-                DisplayInvalidCommandMessage(input);
+                this.DisplayInvalidCommandMessage(input);
                 return;
             }
             
             var relPath = data[1];
-            IoManager.ChangeCurrentDirectoryRelative(relPath);
+            this.inputOutputManager.ChangeCurrentDirectoryRelative(relPath);
         }
 
         /// <summary>
@@ -159,16 +173,16 @@
         /// </summary>
         /// <param name="input">Input.</param>
         /// <param name="data">Data.</param>
-        private static void TryChangePathAbsolutely(string input, string[] data)
+        private void TryChangePathAbsolutely(string input, string[] data)
         {
             if (data.Length != 2)
             {
-                DisplayInvalidCommandMessage(input);
+                this.DisplayInvalidCommandMessage(input);
                 return;
             }
             
             var absolutePath = data[1];
-            IoManager.ChangeCurrentDirectoryAbsolute(absolutePath);
+            this.inputOutputManager.ChangeCurrentDirectoryAbsolute(absolutePath);
         }
 
         /// <summary>
@@ -176,16 +190,16 @@
         /// </summary>
         /// <param name="input">Input.</param>
         /// <param name="data">Data.</param>
-        private static void TryReadDatabaseFromFile(string input, string[] data)
+        private void TryReadDatabaseFromFile(string input, string[] data)
         {
             if (data.Length != 2)
             {
-                DisplayInvalidCommandMessage(input);
+                this.DisplayInvalidCommandMessage(input);
                 return;
             }
             
             var fileName = data[1];
-            StudentsRepository.InitializeData(fileName);
+            this.studentsRepository.LoadData(fileName);
         }
 
         /// <summary>
@@ -193,22 +207,22 @@
         /// </summary>
         /// <param name="input">Input.</param>
         /// <param name="data">Data.</param>
-        private static void TryShowWantedData(string input, string[] data)
+        private void TryShowWantedData(string input, string[] data)
         {
             if (data.Length == 2)
             {
                 var courseName = data[1];
-                StudentsRepository.GetAllStudentsFromCourse(courseName);
+                this.studentsRepository.GetAllStudentsFromCourse(courseName);
             }
             else if (data.Length == 3)
             {
                 var courseName = data[1];
                 var userName = data[2];
-                StudentsRepository.GetStudentScoresFromCourse(courseName, userName);
+                this.studentsRepository.GetStudentScoresFromCourse(courseName, userName);
             }
             else
             {
-                DisplayInvalidCommandMessage(input);
+                this.DisplayInvalidCommandMessage(input);
             }
         }
 
@@ -217,7 +231,7 @@
         /// </summary>
         /// <param name="input">Input.</param>
         /// <param name="data">Data.</param>
-        private static void TryFilterAndTake(string input, string[] data)
+        private void TryFilterAndTake(string input, string[] data)
         {
             if (data.Length == 5)
             {
@@ -226,21 +240,21 @@
                 var takeCommand = data[3].ToLower();
                 var takeQuantity = data[4].ToLower();
             
-                TryParseParametersForFilterAndTake(takeCommand, takeQuantity, courseName, filter);
+                this.TryParseParametersForFilterAndTake(takeCommand, takeQuantity, courseName, filter);
             }
             else
             {
-                DisplayInvalidCommandMessage(input);
+                this.DisplayInvalidCommandMessage(input);
             }
         }
 
-        private static void TryParseParametersForFilterAndTake(string takeCommand, string takeQuantity, string courseName, string filter)
+        private void TryParseParametersForFilterAndTake(string takeCommand, string takeQuantity, string courseName, string filter)
         {
             if (takeCommand == "take")
             {
                 if (takeQuantity == "all")
                 {
-                    StudentsRepository.FilterAndTake(courseName, filter);
+                    this.studentsRepository.FilterAndTake(courseName, filter);
                 }
                 else
                 {
@@ -248,7 +262,7 @@
 
                     if (hasParsed)
                     {
-                        StudentsRepository.FilterAndTake(courseName, filter, studentsToTake);
+                        this.studentsRepository.FilterAndTake(courseName, filter, studentsToTake);
                     }
                     else
                     {
@@ -267,7 +281,7 @@
         /// </summary>
         /// <param name="input">Input.</param>
         /// <param name="data">Data.</param>
-        private static void TryOrderAndTake(string input, string[] data)
+        private void TryOrderAndTake(string input, string[] data)
         {
             if (data.Length == 5)
             {
@@ -276,21 +290,21 @@
                 var comparison = data[2];
                 var takeQuantity = data[4].ToLower();
 
-                TryParseParametersForOrderAndTake(orderCommand, takeQuantity, courseName, comparison);
+                this.TryParseParametersForOrderAndTake(orderCommand, takeQuantity, courseName, comparison);
             }
             else
             {
-                DisplayInvalidCommandMessage(input);
+                this.DisplayInvalidCommandMessage(input);
             }
         }
 
-        private static void TryParseParametersForOrderAndTake(string orderCommand, string takeQuantity, string courseName, string comparison)
+        private void TryParseParametersForOrderAndTake(string orderCommand, string takeQuantity, string courseName, string comparison)
         {
             if (orderCommand == "order")
             {
                 if (takeQuantity == "all")
                 {
-                    StudentsRepository.OrderAndTake(courseName, comparison);
+                    this.studentsRepository.OrderAndTake(courseName, comparison);
                 }
                 else
                 {
@@ -298,7 +312,7 @@
 
                     if (hasParsed)
                     {
-                        StudentsRepository.OrderAndTake(courseName, comparison, studentsToTake);
+                        this.studentsRepository.OrderAndTake(courseName, comparison, studentsToTake);
                     }
                     else
                     {
@@ -312,12 +326,24 @@
             }
         }
 
+        private void TryDropDatabase(string input, string[] data)
+        {
+            if (data.Length != 1)
+            {
+                this.DisplayInvalidCommandMessage(input);
+                return;
+            }
+
+            this.studentsRepository.UnloadData();
+            OutputWriter.WriteMessageOnNewLine("Database dropped");
+        }
+
         /// <summary>
         /// Try to get help.
         /// </summary>
         /// <param name="input">Input.</param>
         /// <param name="data">Data.</param>
-        private static void TryGetHelp(string input, string[] data)
+        private void TryGetHelp(string input, string[] data)
         {
             OutputWriter.WriteMessageOnNewLine($"{new string('_', 100)}");
             OutputWriter.WriteMessageOnNewLine($"|{"make directory - mkdir: path ",-98}|");
@@ -339,7 +365,7 @@
         /// Displays an invalid command message.
         /// </summary>
         /// <param name="input">Input command.</param>
-        private static void DisplayInvalidCommandMessage(string input)
+        private void DisplayInvalidCommandMessage(string input)
         {
             OutputWriter.DisplayException($"The command {input} is invalid");
         }
