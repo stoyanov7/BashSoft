@@ -6,7 +6,7 @@
     using Exceptions;
     using IO;
 
-    public static class RepositoryFilters
+    public class RepositoryFilter
     {
         /// <summary>
         /// Filter and take students data.
@@ -14,7 +14,7 @@
         /// <param name="wantedData">Wanted data.</param>
         /// <param name="wantedFilter">Wanted filter.</param>
         /// <param name="studentsToTake">Students to take.</param>
-        public static void FilterAndTake(Dictionary<string, List<int>> wantedData, string wantedFilter, int studentsToTake)
+        public void FilterAndTake(Dictionary<string, List<int>> wantedData, string wantedFilter, int studentsToTake)
         {
             switch (wantedFilter)
             {
@@ -33,7 +33,7 @@
             }
         }
 
-        private static void FilterAndTake(Dictionary<string, List<int>> wantedData, Predicate<double> givenFilter, int studentsToTake)
+        private void FilterAndTake(Dictionary<string, List<int>> wantedData, Predicate<double> givenFilter, int studentsToTake)
         {
             var counterForPrinted = 0;
 

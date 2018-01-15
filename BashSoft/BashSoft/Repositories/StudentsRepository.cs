@@ -1,25 +1,27 @@
 ﻿namespace BashSoft.Repositories
 {
-    using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
     using System.Text.RegularExpressions;
     using Exceptions;
     using IO;
     using StaticData;
 
-    public static class StudentsRepository
+    public class StudentsRepository
     {
-        /// <summary>
-        /// Boolean flag for whether the data structure is initialized.
-        /// </summary>
-        private static bool isDataInitialized = false;
+        private Dictionary<string, Dictionary<string, List<int>>> studentsByCourse;
+        private bool isDataInitialized = false;
+        private RepositoryFilter filter;
+        private RepositorySorter sorter;
 
-        // Dictionary<courseName, Dictionary<userName, scoresOnTasks>>> 
-        private static Dictionary<string, Dictionary<string, List<int>>> studentsByCourse;
+        public StudentsRepository(RepositoryFilter filter, RepositorySorter sorter)
+        {
+            this.filter = filter;
+            this.sorter = sorter;
+            this.studentsByCourse = new Dictionary<string, Dictionary<string, List<int>>>();
+        }
 
-        public static void FilterAndTake(string courseName, string givenFilter, int? studentsToTake = null)
+        public void FilterAndTake(string courseName, string givenFilter, int? studentsToTake = null)
         {
             if (IsQueryForCoursePossible(courseName))
             {
@@ -28,11 +30,11 @@
                     studentsToTake = studentsByCourse[courseName].Count;
                 }
 
-                RepositoryFilters.FilterAndTake(studentsByCourse[courseName], givenFilter, studentsToTake.Value);
+                this.filter.FilterAndTake(studentsByCourse[courseName], givenFilter, studentsToTake.Value);
             }
         }
 
-        public static void OrderAndTake(string courseName, string comparison, int? studentsToTake = null)
+        public void OrderAndTake(string courseName, string comparison, int? studentsToTake = null)
         {
             if (IsQueryForCoursePossible(courseName))
             {
@@ -41,25 +43,35 @@
                     studentsToTake = studentsByCourse[courseName].Count;
                 }
 
-                RepositorySorters.OrderAndTake(studentsByCourse[courseName], comparison, studentsToTake.Value);
+                this.sorter.OrderAndTake(studentsByCourse[courseName], comparison, studentsToTake.Value);
             }
         }
 
         /// <summary>
         /// Initialize and fill the data structure, if it is not initialized yet, reads the data.
         /// </summary>
-        public static void InitializeData(string fileName = null)
+        public void LoadData(string fileName = null)
         {
-            if (!isDataInitialized)
-            {
-                OutputWriter.WriteMessageOnNewLine("Reading data...");
-                studentsByCourse = new Dictionary<string, Dictionary<string, List<int>>>();
-                ReadData(fileName);
-            }
-            else
+            if (this.isDataInitialized)
             {
                 OutputWriter.WriteMessageOnNewLine(ExceptionMessages.DataAlreadyInitialisedException);
+                return;
             }
+
+            OutputWriter.WriteMessageOnNewLine("Reading data...");
+            this.studentsByCourse = new Dictionary<string, Dictionary<string, List<int>>>();
+            this.ReadData(fileName);
+        }
+
+        public void UnloadData()
+        {
+            if (!this.isDataInitialized)
+            {
+                OutputWriter.DisplayException(ExceptionMessages.DataNotInitializedExceptionMessage);
+            }
+
+            this.studentsByCourse = new Dictionary<string, Dictionary<string, List<int>>>();
+            this.isDataInitialized = false;
         }
 
         /// <summary>
@@ -67,7 +79,7 @@
         /// </summary>
         /// <param name="courseName">Course name.</param>
         /// <param name="username">Username.</param>
-        public static void GetStudentScoresFromCourse(string courseName, string username)
+        public void GetStudentScoresFromCourse(string courseName, string username)
         {
             if (IsQueryForStudentPossiblе(courseName, username))
             {
@@ -80,7 +92,7 @@
         /// Get all students from a given course. 
         /// </summary>
         /// <param name="courseName">Course name.</param>
-        public static void GetAllStudentsFromCourse(string courseName)
+        public void GetAllStudentsFromCourse(string courseName)
         {
             if (IsQueryForCoursePossible(courseName))
             {
@@ -92,7 +104,7 @@
             }
         }
 
-        private static void ReadData(string fileName)
+        private void ReadData(string fileName)
         {
             var path = $"{SessionData.CurrentPath}\\{fileName}";
 
@@ -141,7 +153,7 @@
         /// True if if the data structure has been initialized and the course is contained,
         /// otherwise false.
         /// </returns>
-        private static bool IsQueryForCoursePossible(string courseName)
+        private bool IsQueryForCoursePossible(string courseName)
         {
             if (isDataInitialized)
             {
@@ -172,7 +184,7 @@
         /// True if course is possible and student username is contained into database,
         /// otherwise false.
         /// </returns>
-        private static bool IsQueryForStudentPossiblе(string courseName, string studentUsername)
+        private bool IsQueryForStudentPossiblе(string courseName, string studentUsername)
         {
             if (IsQueryForCoursePossible(courseName) && studentsByCourse[courseName].ContainsKey(studentUsername))
             {

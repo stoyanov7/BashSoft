@@ -5,14 +5,14 @@
     using Exceptions;
     using IO;
 
-    public static class Tester
+    public class Tester
     {
         /// <summary>
         /// Compare two files and get mismatches.
         /// </summary>
         /// <param name="userOutputPath">User output path.</param>
         /// <param name="expectedOutputPath">Expected output path.</param>
-        public static void CompareContent(string userOutputPath, string expectedOutputPath)
+        public void CompareContent(string userOutputPath, string expectedOutputPath)
         {
             OutputWriter.WriteMessageOnNewLine("Reading files...");
 
@@ -39,7 +39,7 @@
         /// </summary>
         /// <param name="expectedOutputPath">Expected output path.</param>
         /// <returns>String with filan path.</returns>
-        private static string GetMismatcPath(string expectedOutputPath)
+        private string GetMismatcPath(string expectedOutputPath)
         {
             var indexOfLastSlash = expectedOutputPath.LastIndexOf('\\');
             var directoryPath = expectedOutputPath.Substring(0, indexOfLastSlash);
@@ -55,7 +55,7 @@
         /// <param name="expectedOutputLines">Expected output lines.</param>
         /// <param name="hasMismatch">Has any mismatches.</param>
         /// <returns></returns>
-        private static string[] GetLinesWithPossibleMismatches(string[] actualOutputLines, string[] expectedOutputLines, out bool hasMismatch)
+        private string[] GetLinesWithPossibleMismatches(string[] actualOutputLines, string[] expectedOutputLines, out bool hasMismatch)
         {
             hasMismatch = false;
             var output = string.Empty;
@@ -101,7 +101,7 @@
         /// <param name="mismatches">Array with mismatches.</param>
         /// <param name="hasMismatch">Has any mismatches.</param>
         /// <param name="mismatchesPath">Mismatches path.</param>
-        private static void PrintOutput(string[] mismatches, bool hasMismatch, string mismatchesPath)
+        private void PrintOutput(string[] mismatches, bool hasMismatch, string mismatchesPath)
         {   
             if (hasMismatch)
             {

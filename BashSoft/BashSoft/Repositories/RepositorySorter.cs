@@ -5,7 +5,7 @@
     using Exceptions;
     using IO;
 
-    public static class RepositorySorters
+    public class RepositorySorter
     {
         /// <summary>
         /// Order and take students data.
@@ -13,7 +13,7 @@
         /// <param name="wantedData">Wanted data.</param>
         /// <param name="comparison">Comparasion.</param>
         /// <param name="studentToTake">Students to take.</param>
-        public static void OrderAndTake(Dictionary<string, List<int>> wantedData, string comparison, int studentToTake)
+        public void OrderAndTake(Dictionary<string, List<int>> wantedData, string comparison, int studentToTake)
         {
             comparison = comparison.ToLower();
 
@@ -37,7 +37,7 @@
             }
         }
 
-        private static void PrintStudents(Dictionary<string, List<int>> studentsSorted)
+        private void PrintStudents(Dictionary<string, List<int>> studentsSorted)
         {
             foreach (var kvp in studentsSorted)
             {
