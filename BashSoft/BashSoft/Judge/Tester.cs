@@ -4,6 +4,7 @@
     using System.IO;
     using Exceptions;
     using IO;
+    using StaticData;
 
     public class Tester
     {
@@ -32,7 +33,7 @@
             }
             catch (FileNotFoundException)
             {
-                OutputWriter.DisplayException(ExceptionMessages.InvalidPath);
+                throw new InvalidPathException();
             }
         }
 
@@ -120,7 +121,7 @@
                 }
                 catch (DirectoryNotFoundException)
                 {
-                    OutputWriter.DisplayException(ExceptionMessages.InvalidPath);
+                    throw new InvalidPathException();
                 }
 
                 return;

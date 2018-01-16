@@ -4,6 +4,7 @@
     using System.Linq;
     using Exceptions;
     using IO;
+    using StaticData;
 
     public class RepositorySorter
     {
@@ -13,6 +14,7 @@
         /// <param name="studentsMarks">Wanted data.</param>
         /// <param name="comparison">Comparasion.</param>
         /// <param name="studentToTake">Students to take.</param>
+        /// <exception cref="InvalidComparisonQueryException"/>
         public void OrderAndTake(Dictionary<string, double> studentsMarks, string comparison, int studentToTake)
         {
             comparison = comparison.ToLower();
@@ -32,8 +34,7 @@
                         .ToDictionary(pair => pair.Key, pair => pair.Value));
                     break;
                 default:
-                    OutputWriter.DisplayException(ExceptionMessages.InvalidComparisonQuery);
-                    break;
+                    throw new InvalidComparisonQueryException();
             }
         }
 

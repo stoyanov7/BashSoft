@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Exceptions\ExceptionMessages.cs" />
+    <Compile Include="StaticData\ExceptionMessages.cs" />
     <Compile Include="IO\CommandInterpreter.cs" />
     <Compile Include="IO\InputReader.cs" />
     <Compile Include="IO\IoManager.cs" />
@@ -60,6 +60,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\BashSoft.Exceptions\BashSoft.Exceptions.csproj">
+      <Project>{046D1813-49B2-4C3F-9BB5-9BFE6BC407BD}</Project>
+      <Name>BashSoft.Exceptions</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -70,12 +70,12 @@
         /// <summary>
         /// Initialize and fill the data structure, if it is not initialized yet, reads the data.
         /// </summary>
+        /// <exception cref="DataAlreadyInitialisedException"/>
         public void LoadData(string fileName = null)
         {
             if (this.isDataInitialized)
             {
-                OutputWriter.WriteMessageOnNewLine(ExceptionMessages.DataAlreadyInitialisedException);
-                return;
+                throw new DataAlreadyInitialisedException();
             }
 
             this.students = new Dictionary<string, Student>();
@@ -249,10 +249,8 @@
             {
                 return true;
             }
-            else
-            {
-                OutputWriter.DisplayException(ExceptionMessages.InexistingStudentInDataBase);
-            }
+
+            OutputWriter.DisplayException(ExceptionMessages.InexistingStudentInDataBase);
 
             return false;
         }

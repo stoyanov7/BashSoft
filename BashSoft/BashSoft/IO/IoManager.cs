@@ -78,7 +78,7 @@
             }
             catch (ArgumentException)
             {
-                OutputWriter.DisplayException(ExceptionMessages.ForbiddenSymbolsContainedInName);   
+                throw new InvalidFileNameException();
             }
 
             OutputWriter.WriteMessageOnNewLine("Directory created!");
@@ -102,7 +102,7 @@
                 }
                 catch (ArgumentOutOfRangeException)
                 {
-                    OutputWriter.DisplayException(ExceptionMessages.UnableToGoHigherInPartitionHierarchy);
+                    throw new InvalidPathException();
                 }
             }
             else
@@ -117,13 +117,13 @@
         /// Get absolute path and goes directly to the path.
         /// </summary>
         /// <param name="absolutePath">Absolute path.</param>
-        /// <exception cref="DirectoryNotFoundException">
+        /// <exception cref="InvalidPathException">
         /// If the file/folder is with invalid path or does not exist.</exception>
         public void ChangeCurrentDirectoryAbsolute(string absolutePath)
         {
             if (!Directory.Exists(absolutePath))
             {
-                throw new DirectoryNotFoundException(ExceptionMessages.InvalidPath);
+                throw new InvalidPathException();
             }
 
             SessionData.CurrentPath = absolutePath;

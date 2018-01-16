@@ -13,6 +13,7 @@
         /// <param name="studentsWithMarks">Wanted data.</param>
         /// <param name="wantedFilter">Wanted filter.</param>
         /// <param name="studentsToTake">Students to take.</param>
+        /// <exception cref="InvalidStudentFilterException"/>
         public void FilterAndTake(Dictionary<string, double> studentsWithMarks, string wantedFilter, int studentsToTake)
         {
             switch (wantedFilter)
@@ -27,8 +28,7 @@
                     this.FilterAndTake(studentsWithMarks, x => x < 3.5, studentsToTake);
                     break;
                 default:
-                    OutputWriter.DisplayException(ExceptionMessages.InvalidStudentFilter);
-                    break;
+                    throw new InvalidStudentFilterException();
             }
         }
 

@@ -1,10 +1,10 @@
 ﻿namespace BashSoft.Models
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Exceptions;
     using IO;
+    using StaticData;
 
     public class Student
     {
@@ -27,7 +27,7 @@
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentException(nameof(this.username), ExceptionMessages.NullOrEmptyValue);
+                    throw new InvalidStringException(nameof(this.username));
                 }
 
                 this.username = value;
@@ -42,8 +42,7 @@
         {
             if (this.enrolledCourses.ContainsKey(course.Name))
             {
-                OutputWriter.DisplayException(string.Format(ExceptionMessages.StudentAlreadyEnrolledInGivenCourse, this.username, course.Name));
-                return;
+                throw new DuplicateEntryInStructureException(this.Username, course.Name);
             }
 
             this.enrolledCourses.Add(course.Name, course);
@@ -53,8 +52,7 @@
         {
             if (!this.enrolledCourses.ContainsKey(courseName))
             {
-                OutputWriter.DisplayException(ExceptionMessages.NotEnrolledInCourse);
-                return;
+                throw new CourseNotFoundException();
             }
 
             if (scores.Length > Course.NumberOfTasksOnExam)

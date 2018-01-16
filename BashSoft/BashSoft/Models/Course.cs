@@ -1,9 +1,9 @@
 ﻿namespace BashSoft.Models
 {
-    using System;
     using System.Collections.Generic;
     using Exceptions;
     using IO;
+    using StaticData;
 
     public class Course
     {
@@ -27,7 +27,7 @@
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentException(nameof(this.name), ExceptionMessages.NullOrEmptyValue);
+                    throw new InvalidStringException(nameof(this.name));
                 }
 
                 this.name = value;
@@ -40,7 +40,7 @@
         {
             if (this.studentsByName.ContainsKey(student.Username))
             {
-                OutputWriter.DisplayException(ExceptionMessages.StudentAlreadyEnrolledInGivenCourse);
+                throw new DuplicateEntryInStructureException(student.Username, this.Name);
             }
 
             this.studentsByName[student.Username] = student;

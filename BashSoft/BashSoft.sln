@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BashSoft", "BashSoft\BashSoft.csproj", "{80C69BD3-E710-4077-BCE6-D5AD5C887149}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BashSoft.Exceptions", "BashSoft.Exceptions\BashSoft.Exceptions.csproj", "{046D1813-49B2-4C3F-9BB5-9BFE6BC407BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{80C69BD3-E710-4077-BCE6-D5AD5C887149}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80C69BD3-E710-4077-BCE6-D5AD5C887149}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80C69BD3-E710-4077-BCE6-D5AD5C887149}.Release|Any CPU.Build.0 = Release|Any CPU
+		{046D1813-49B2-4C3F-9BB5-9BFE6BC407BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{046D1813-49B2-4C3F-9BB5-9BFE6BC407BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{046D1813-49B2-4C3F-9BB5-9BFE6BC407BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{046D1813-49B2-4C3F-9BB5-9BFE6BC407BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
