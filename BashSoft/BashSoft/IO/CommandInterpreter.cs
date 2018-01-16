@@ -1,6 +1,8 @@
 ﻿namespace BashSoft.IO
 {
+    using System;
     using System.Diagnostics;
+    using System.IO;
     using System.Linq;
     using Exceptions;
     using Judge;
@@ -26,8 +28,32 @@
                 .Split(' ')
                 .ToArray();
 
-            var command = data[0];
+            var command = data[0].ToLower();
 
+            try
+            {
+                this.ParseCommand(input, command, data);
+            }
+            catch (DirectoryNotFoundException dnfex)
+            {
+                OutputWriter.DisplayException(dnfex.Message);
+            }
+            catch (ArgumentOutOfRangeException aorex)
+            {
+                OutputWriter.DisplayException(aorex.Message);
+            }
+            catch (ArgumentException aex)
+            {
+                OutputWriter.DisplayException(aex.Message);
+            }
+            catch (Exception e)
+            {
+                OutputWriter.DisplayException(e.Message);
+            }
+        }
+
+        private void ParseCommand(string input, string command, string[] data)
+        {
             switch (command)
             {
                 case "open":
@@ -42,13 +68,13 @@
                 case "cmp":
                     this.TryCompareFiles(input, data);
                     break;
-                case "cdRel":
+                case "cdrel":
                     this.TryChangePathRelatively(input, data);
                     break;
-                case "cdAbs":
+                case "cdabs":
                     this.TryChangePathAbsolutely(input, data);
                     break;
-                case "readDb":
+                case "readdb":
                     this.TryReadDatabaseFromFile(input, data);
                     break;
                 case "show":
@@ -60,7 +86,7 @@
                 case "order":
                     this.TryOrderAndTake(input, data);
                     break;
-                case "dropDb:":
+                case "dropdb:":
                     this.TryDropDatabase(input, data);
                     break;
                 case "help":

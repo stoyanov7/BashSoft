@@ -13,7 +13,7 @@
         /// </summary>
         /// <param name="depth">Directory depth.</param>
         /// <exception cref="UnauthorizedAccessException">
-        /// If The folder/file you are trying to get access needs a higher level of rights.</exception>
+        /// If the folder/file you are trying to get access needs a higher level of rights.</exception>
         public void TraverseDirectory(int depth)
         {
             OutputWriter.WriteEmptyLine();
@@ -117,12 +117,13 @@
         /// Get absolute path and goes directly to the path.
         /// </summary>
         /// <param name="absolutePath">Absolute path.</param>
+        /// <exception cref="DirectoryNotFoundException">
+        /// If the file/folder is with invalid path or does not exist.</exception>
         public void ChangeCurrentDirectoryAbsolute(string absolutePath)
         {
             if (!Directory.Exists(absolutePath))
             {
-                OutputWriter.DisplayException(ExceptionMessages.InvalidPath);
-                return;
+                throw new DirectoryNotFoundException(ExceptionMessages.InvalidPath);
             }
 
             SessionData.CurrentPath = absolutePath;
