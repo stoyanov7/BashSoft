@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Bytes2you.Validation, Version=2.0.0.0, Culture=neutral, PublicKeyToken=a7d501dd757e0442, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bytes2you.Validation.2.0.0.0\lib\portable-win+net40+sl40+wp+Xbox40\Bytes2you.Validation.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,6 +45,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IO\Commands\ChangeAbsolutePathCommand.cs" />
+    <Compile Include="IO\Commands\ChangeRelativePathCommand.cs" />
+    <Compile Include="IO\Commands\Command.cs" />
+    <Compile Include="IO\Commands\CompareFilesCommand.cs" />
+    <Compile Include="IO\Commands\DropDatabaseCommand.cs" />
+    <Compile Include="IO\Commands\GetHelpCommand.cs" />
+    <Compile Include="IO\Commands\MakeDirectoryCommand.cs" />
+    <Compile Include="IO\Commands\OpenFileCommand.cs" />
+    <Compile Include="IO\Commands\PrintFilteredStudentsCommand.cs" />
+    <Compile Include="IO\Commands\PrintOrderedStudentsCommand.cs" />
+    <Compile Include="IO\Commands\ReadDatabaseCommand.cs" />
+    <Compile Include="IO\Commands\ShowCourseCommand.cs" />
+    <Compile Include="IO\Commands\TraverseFoldersCommand.cs" />
     <Compile Include="StaticData\ExceptionMessages.cs" />
     <Compile Include="IO\CommandInterpreter.cs" />
     <Compile Include="IO\InputReader.cs" />
@@ -59,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BashSoft.Exceptions\BashSoft.Exceptions.csproj">

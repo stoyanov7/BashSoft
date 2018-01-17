@@ -1,6 +1,7 @@
 ﻿namespace BashSoft.Models
 {
     using System.Collections.Generic;
+    using Bytes2you.Validation;
     using Exceptions;
     using IO;
     using StaticData;
@@ -25,11 +26,8 @@
 
             private set
             {
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new InvalidStringException(nameof(this.name));
-                }
-
+                Guard.WhenArgument(value, "Name").IsNullOrEmpty().Throw();
+                
                 this.name = value;
             }
         }
@@ -38,6 +36,8 @@
 
         public void EnrollStudent(Student student)
         {
+            Guard.WhenArgument(student, "student").IsNull().Throw();
+
             if (this.studentsByName.ContainsKey(student.Username))
             {
                 throw new DuplicateEntryInStructureException(student.Username, this.Name);

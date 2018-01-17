@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Bytes2you.Validation;
     using Exceptions;
     using IO;
     using StaticData;
@@ -25,11 +26,8 @@
 
             private set
             {
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new InvalidStringException(nameof(this.username));
-                }
-
+                Guard.WhenArgument(value, "username").IsNullOrEmpty().Throw();
+                
                 this.username = value;
             }
         }
@@ -40,6 +38,8 @@
 
         public void EnrollInCourse(Course course)
         {
+            Guard.WhenArgument(course, "course").IsNull().Throw();
+
             if (this.enrolledCourses.ContainsKey(course.Name))
             {
                 throw new DuplicateEntryInStructureException(this.Username, course.Name);

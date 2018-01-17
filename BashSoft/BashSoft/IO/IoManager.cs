@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using Bytes2you.Validation;
     using Exceptions;
     using StaticData;
 
@@ -64,6 +65,8 @@
         /// If the folder name contains symbols that are not allowed to be used.</exception>
         public void CreateDirectoryInCurrentFolder(string folderName)
         {
+            Guard.WhenArgument(folderName, "folderName").IsNullOrEmpty().Throw();
+
             var path = SessionData.CurrentPath + "\\" + folderName;
 
             if (Directory.Exists(path))
@@ -91,6 +94,8 @@
         /// <exception cref="ArgumentOutOfRangeException">If the path is cannot go in higher level.</exception>
         public void ChangeCurrentDirectoryRelative(string relativePath)
         {
+            Guard.WhenArgument(relativePath, "relativePath").IsNullOrEmpty().Throw();
+
             if (relativePath == "..")
             {
                 try
@@ -121,6 +126,8 @@
         /// If the file/folder is with invalid path or does not exist.</exception>
         public void ChangeCurrentDirectoryAbsolute(string absolutePath)
         {
+            Guard.WhenArgument(absolutePath, "absolutePath").IsNullOrEmpty().Throw();
+
             if (!Directory.Exists(absolutePath))
             {
                 throw new InvalidPathException();
