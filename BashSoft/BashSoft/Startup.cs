@@ -1,6 +1,7 @@
 ﻿namespace BashSoft
 {
     using IO;
+    using IO.Contracts;
     using Judge;
     using Repositories;
 
@@ -16,7 +17,9 @@
             var manager = new IoManager();
             var studentsRepository = new StudentsRepository(new RepositoryFilter(), new RepositorySorter());
 
-            var currentInterpreter = new CommandInterpreter(tester, studentsRepository, manager);
+            ICommandInterpreter currentInterpreter = 
+                new CommandInterpreter(tester, studentsRepository, manager);
+
             var reader = new InputReader(currentInterpreter);
 
             reader.StartReadingCommands();

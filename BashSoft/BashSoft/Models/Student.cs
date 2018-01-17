@@ -3,11 +3,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using Bytes2you.Validation;
+    using Contracts;
     using Exceptions;
     using IO;
     using StaticData;
 
-    public class Student
+    public class Student : IStudent
     {
         private string username;
         private readonly Dictionary<string, Course> enrolledCourses;

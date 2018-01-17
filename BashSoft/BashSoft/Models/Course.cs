@@ -2,11 +2,10 @@
 {
     using System.Collections.Generic;
     using Bytes2you.Validation;
+    using Contracts;
     using Exceptions;
-    using IO;
-    using StaticData;
 
-    public class Course
+    public class Course : ICourse
     {
         public const int NumberOfTasksOnExam = 5;
         public const int MaxScoreOnExamTask = 100;

@@ -1,13 +1,14 @@
 ﻿namespace BashSoft.IO.Commands
 {
     using Exceptions;
+    using IO.Contracts;
     using Judge;
     using Repositories;
 
     public class PrintOrderedStudentsCommand : Command
     {
-        public PrintOrderedStudentsCommand(string input, string[] data, Tester judge, StudentsRepository repository,
-            IoManager inputOutputManager) : base(input, data, judge, repository, inputOutputManager)
+        public PrintOrderedStudentsCommand(string input, string[] data, Tester judge, StudentsRepository repository,IDirectoryManager inputOutputManager)
+            : base(input, data, judge, repository, inputOutputManager)
         {
         }
 

@@ -1,6 +1,7 @@
 ﻿namespace BashSoft.IO.Commands
 {
     using Exceptions;
+    using IO.Contracts;
     using Judge;
     using Repositories;
 
@@ -17,7 +18,7 @@
         /// <param name="judge">Tester.</param>
         /// <param name="repository">Student repository.</param>
         /// <param name="inputOutputManager">Input output manager.</param>
-        public MakeDirectoryCommand(string input, string[] data, Tester judge, StudentsRepository repository, IoManager inputOutputManager)
+        public MakeDirectoryCommand(string input, string[] data, Tester judge, StudentsRepository repository, IDirectoryManager inputOutputManager)
             : base(input, data, judge, repository, inputOutputManager)
         {
         }

@@ -1,6 +1,7 @@
 ﻿namespace BashSoft.IO
 {
     using System;
+    using Contracts;
     using StaticData;
 
     public class InputReader
@@ -8,13 +9,13 @@
         private const string QuitCommand = "quit";
         private const string ExitCommand = "exit";
 
-        private readonly CommandInterpreter commandInterpreter;
+        private readonly ICommandInterpreter commandInterpreter;
 
         /// <summary>
         /// Create a new instance of <see cref="CommandInterpreter"/>
         /// </summary>
         /// <param name="commandInterpreter">Command interpreter.</param>
-        public InputReader(CommandInterpreter commandInterpreter)
+        public InputReader(ICommandInterpreter commandInterpreter)
         {
             this.commandInterpreter = commandInterpreter;
         }

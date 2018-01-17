@@ -4,10 +4,11 @@
     using System.Collections.Generic;
     using System.IO;
     using Bytes2you.Validation;
+    using Contracts;
     using Exceptions;
     using StaticData;
 
-    public class IoManager
+    public class IoManager : IDirectoryManager
     {
         /// <summary>
         /// Traverse folders in order.

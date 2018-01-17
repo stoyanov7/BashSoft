@@ -2,6 +2,7 @@
 {
     using System.Diagnostics;
     using Exceptions;
+    using IO.Contracts;
     using Judge;
     using Repositories;
     using StaticData;
@@ -19,7 +20,7 @@
         /// <param name="judge">Tester.</param>
         /// <param name="repository">Student repository.</param>
         /// <param name="inputOutputManager">Input output manager.</param>
-        public OpenFileCommand(string input, string[] data, Tester judge, StudentsRepository repository, IoManager inputOutputManager)
+        public OpenFileCommand(string input, string[] data, Tester judge, StudentsRepository repository, IDirectoryManager inputOutputManager)
             : base(input, data, judge, repository, inputOutputManager)
         {
         }

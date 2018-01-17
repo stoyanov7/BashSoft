@@ -4,18 +4,19 @@
     using System.Linq;
     using Bytes2you.Validation;
     using Commands;
+    using Commands.Contracts;
+    using Contracts;
     using Exceptions;
     using Judge;
     using Repositories;
-    using StaticData;
 
-    public class CommandInterpreter
+    public class CommandInterpreter : ICommandInterpreter
     {
         private readonly Tester tester;
         private readonly StudentsRepository studentsRepository;
-        private readonly IoManager inputOutputManager;
+        private readonly IDirectoryManager inputOutputManager;
 
-        public CommandInterpreter(Tester tester, StudentsRepository studentsRepository, IoManager inputOutputManager)
+        public CommandInterpreter(Tester tester, StudentsRepository studentsRepository, IDirectoryManager inputOutputManager)
         {
             this.tester = tester;
             this.studentsRepository = studentsRepository;
@@ -31,7 +32,7 @@
                 .ToArray();
 
             var commandName = data[0].ToLower();
-
+                
             try
             {
                 var command = this.ParseCommand(input, commandName, data);
@@ -43,7 +44,7 @@
             }
         }
 
-        private Command ParseCommand(string input, string command, string[] data)
+        private IExecutable ParseCommand(string input, string command, string[] data)
         {
             switch (command)
             {
