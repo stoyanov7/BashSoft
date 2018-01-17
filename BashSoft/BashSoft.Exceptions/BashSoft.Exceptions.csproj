@@ -43,8 +43,10 @@
     <Compile Include="CourseNotFoundException.cs" />
     <Compile Include="DataAlreadyInitialisedException.cs" />
     <Compile Include="DuplicateEntryInStructureException.cs" />
+    <Compile Include="InvalidCommandException.cs" />
     <Compile Include="InvalidComparisonQueryException.cs" />
     <Compile Include="InvalidFileNameException.cs" />
+    <Compile Include="InvalidNumberException.cs" />
     <Compile Include="InvalidPathException.cs" />
     <Compile Include="InvalidStringException.cs" />
     <Compile Include="InvalidStudentFilterException.cs" />
