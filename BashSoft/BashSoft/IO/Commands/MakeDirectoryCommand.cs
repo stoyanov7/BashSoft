@@ -2,8 +2,8 @@
 {
     using Exceptions;
     using IO.Contracts;
-    using Judge;
-    using Repositories;
+    using Judge.Contracts;
+    using Repositories.Contracts;
 
     /// <summary>
     /// Try to create directory in current folder.
@@ -18,7 +18,7 @@
         /// <param name="judge">Tester.</param>
         /// <param name="repository">Student repository.</param>
         /// <param name="inputOutputManager">Input output manager.</param>
-        public MakeDirectoryCommand(string input, string[] data, Tester judge, StudentsRepository repository, IDirectoryManager inputOutputManager)
+        public MakeDirectoryCommand(string input, string[] data, IContentComparer judge, IDatabase repository, IDirectoryManager inputOutputManager)
             : base(input, data, judge, repository, inputOutputManager)
         {
         }

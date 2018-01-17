@@ -64,8 +64,15 @@
     <Compile Include="IO\Contracts\IDirectoryCreator.cs" />
     <Compile Include="IO\Contracts\IDirectoryManager.cs" />
     <Compile Include="IO\Contracts\IDirectoryTraverser.cs" />
+    <Compile Include="Judge\Contracts\IContentComparer.cs" />
     <Compile Include="Models\Contracts\ICourse.cs" />
     <Compile Include="Models\Contracts\IStudent.cs" />
+    <Compile Include="Repositories\Contracts\IDatabase.cs" />
+    <Compile Include="Repositories\Contracts\IDataFilter.cs" />
+    <Compile Include="Repositories\Contracts\IDataSorter.cs" />
+    <Compile Include="Repositories\Contracts\IFilteredTaker.cs" />
+    <Compile Include="Repositories\Contracts\IOrderedTaker.cs" />
+    <Compile Include="Repositories\Contracts\IRequester.cs" />
     <Compile Include="StaticData\ExceptionMessages.cs" />
     <Compile Include="IO\CommandInterpreter.cs" />
     <Compile Include="IO\InputReader.cs" />

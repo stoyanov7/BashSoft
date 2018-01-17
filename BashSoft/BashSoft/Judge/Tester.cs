@@ -2,11 +2,12 @@
 {
     using System;
     using System.IO;
+    using Contracts;
     using Exceptions;
     using IO;
     using StaticData;
 
-    public class Tester
+    public class Tester : IContentComparer
     {
         /// <summary>
         /// Compare two files and get mismatches.

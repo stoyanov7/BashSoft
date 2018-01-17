@@ -7,16 +7,16 @@
     using Commands.Contracts;
     using Contracts;
     using Exceptions;
-    using Judge;
-    using Repositories;
+    using Judge.Contracts;
+    using Repositories.Contracts;
 
     public class CommandInterpreter : ICommandInterpreter
     {
-        private readonly Tester tester;
-        private readonly StudentsRepository studentsRepository;
+        private readonly IContentComparer tester;
+        private readonly IDatabase studentsRepository;
         private readonly IDirectoryManager inputOutputManager;
 
-        public CommandInterpreter(Tester tester, StudentsRepository studentsRepository, IDirectoryManager inputOutputManager)
+        public CommandInterpreter(IContentComparer tester, IDatabase studentsRepository, IDirectoryManager inputOutputManager)
         {
             this.tester = tester;
             this.studentsRepository = studentsRepository;

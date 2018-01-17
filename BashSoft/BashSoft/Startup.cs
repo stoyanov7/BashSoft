@@ -3,7 +3,9 @@
     using IO;
     using IO.Contracts;
     using Judge;
+    using Judge.Contracts;
     using Repositories;
+    using Repositories.Contracts;
 
     public class Startup
     {
@@ -13,9 +15,9 @@
         /// <param studentByName="args">Arguments.</param>
         public static void Main(string[] args)
         {
-            var tester = new Tester();
-            var manager = new IoManager();
-            var studentsRepository = new StudentsRepository(new RepositoryFilter(), new RepositorySorter());
+            IContentComparer tester = new Tester();
+            IDirectoryManager manager = new IoManager();
+            IDatabase studentsRepository = new StudentsRepository(new RepositoryFilter(), new RepositorySorter());
 
             ICommandInterpreter currentInterpreter = 
                 new CommandInterpreter(tester, studentsRepository, manager);

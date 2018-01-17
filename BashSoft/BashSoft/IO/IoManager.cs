@@ -72,6 +72,7 @@
 
             if (Directory.Exists(path))
             {
+                // TODO: Add custom exception - FileExistException
                 OutputWriter.WriteMessageOnNewLine($"File {folderName} exist!");
                 return;
             }

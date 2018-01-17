@@ -2,11 +2,11 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Contracts;
     using Exceptions;
     using IO;
-    using StaticData;
 
-    public class RepositorySorter
+    public class RepositorySorter : IDataSorter
     {
         /// <summary>
         /// Order and take students data.

@@ -2,12 +2,12 @@
 {
     using Exceptions;
     using IO.Contracts;
-    using Judge;
-    using Repositories;
+    using Judge.Contracts;
+    using Repositories.Contracts;
 
     public class PrintOrderedStudentsCommand : Command
     {
-        public PrintOrderedStudentsCommand(string input, string[] data, Tester judge, StudentsRepository repository,IDirectoryManager inputOutputManager)
+        public PrintOrderedStudentsCommand(string input, string[] data, IContentComparer judge, IDatabase repository,IDirectoryManager inputOutputManager)
             : base(input, data, judge, repository, inputOutputManager)
         {
         }
@@ -27,8 +27,7 @@
             this.TryParseParametersForOrderAndTake(orderCommand, takeQuantity, courseName, comparison);
         }
 
-        private void TryParseParametersForOrderAndTake(string orderCommand, string takeQuantity, string courseName,
-            string comparison)
+        private void TryParseParametersForOrderAndTake(string orderCommand, string takeQuantity, string courseName, string comparison)
         {
             if (orderCommand != "order")
             {

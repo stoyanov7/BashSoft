@@ -11,13 +11,13 @@
     public class Student : IStudent
     {
         private string username;
-        private readonly Dictionary<string, Course> enrolledCourses;
+        private readonly Dictionary<string, ICourse> enrolledCourses;
         private readonly Dictionary<string, double> marksByCourseName;
 
         public Student(string username)
         {
             this.Username = username;
-            this.enrolledCourses = new Dictionary<string, Course>();
+            this.enrolledCourses = new Dictionary<string, ICourse>();
             this.marksByCourseName = new Dictionary<string, double>();
         }
 
@@ -33,11 +33,11 @@
             }
         }
 
-        public IReadOnlyDictionary<string, Course> EnrolledCourses => this.enrolledCourses;
+        public IReadOnlyDictionary<string, ICourse> EnrolledCourses => this.enrolledCourses;
 
         public IReadOnlyDictionary<string, double> MarksByCourseName => this.marksByCourseName;
 
-        public void EnrollInCourse(Course course)
+        public void EnrollInCourse(ICourse course)
         {
             Guard.WhenArgument(course, "course").IsNull().Throw();
 
@@ -65,7 +65,7 @@
             this.marksByCourseName[courseName] = this.CalculateMark(scores);
         }
 
-        private double CalculateMark(int[] scores)
+        private double CalculateMark(IEnumerable<int> scores)
         {
             var percentageOfSolvedExam = scores.Sum()
                 / (double)(Course.NumberOfTasksOnExam * Course.MaxScoreOnExamTask);

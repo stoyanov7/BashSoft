@@ -2,12 +2,12 @@
 {
     using Exceptions;
     using IO.Contracts;
-    using Judge;
-    using Repositories;
+    using Judge.Contracts;
+    using Repositories.Contracts;
 
     public class CompareFilesCommand : Command
     {
-        public CompareFilesCommand(string input, string[] data, Tester judge, StudentsRepository repository, IDirectoryManager inputOutputManager)
+        public CompareFilesCommand(string input, string[] data, IContentComparer judge, IDatabase repository, IDirectoryManager inputOutputManager)
             : base(input, data, judge, repository, inputOutputManager)
         {
         }

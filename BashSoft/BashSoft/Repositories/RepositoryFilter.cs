@@ -2,10 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using Contracts;
     using Exceptions;
     using IO;
 
-    public class RepositoryFilter
+    public class RepositoryFilter : IDataFilter
     {
         /// <summary>
         /// Filter and take students data.

@@ -6,8 +6,8 @@
     {
         string Name { get; }
 
-        IReadOnlyDictionary<string, Student> StudentsByName { get; }
+        IReadOnlyDictionary<string, IStudent> StudentsByName { get; }
 
-        void EnrollStudent(Student student);
+        void EnrollStudent(IStudent student);
     }
 }

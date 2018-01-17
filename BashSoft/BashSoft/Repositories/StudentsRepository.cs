@@ -5,30 +5,32 @@
     using System.IO;
     using System.Linq;
     using System.Text.RegularExpressions;
+    using Contracts;
     using Exceptions;
     using IO;
     using Models;
+    using Models.Contracts;
     using StaticData;
 
-    public class StudentsRepository
+    public class StudentsRepository : IDatabase
     {
-        private Dictionary<string, Course> courses;
-        private Dictionary<string, Student> students;
+        private Dictionary<string, ICourse> courses;
+        private Dictionary<string, IStudent> students;
         private bool isDataInitialized;
-        private readonly RepositoryFilter filter;
-        private readonly RepositorySorter sorter;
+        private readonly IDataFilter filter;
+        private readonly IDataSorter sorter;
 
         /// <summary>
         /// Create new instance of <see cref="RepositoryFilter"/> and <see cref="RepositorySorter"/>
         /// </summary>
         /// <param name="filter">Repository filter.</param>
         /// <param name="sorter">Repository sorter.</param>
-        public StudentsRepository(RepositoryFilter filter, RepositorySorter sorter)
+        public StudentsRepository(IDataFilter filter, IDataSorter sorter)
         {
             this.filter = filter;
             this.sorter = sorter;
-            this.students = new Dictionary<string, Student>();
-            this.courses = new Dictionary<string, Course>();
+            this.students = new Dictionary<string, IStudent>();
+            this.courses = new Dictionary<string, ICourse>();
         }
 
         public void FilterAndTake(string courseName, string givenFilter, int? studentsToTake = null)
@@ -78,8 +80,8 @@
                 throw new DataAlreadyInitialisedException();
             }
 
-            this.students = new Dictionary<string, Student>();
-            this.courses = new Dictionary<string, Course>();
+            this.students = new Dictionary<string, IStudent>();
+            this.courses = new Dictionary<string, ICourse>();
 
             OutputWriter.WriteMessageOnNewLine("Reading data...");
             this.ReadData(fileName);

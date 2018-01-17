@@ -11,12 +11,12 @@
         public const int MaxScoreOnExamTask = 100;
 
         private string name;
-        private readonly Dictionary<string, Student> studentsByName;
+        private readonly Dictionary<string, IStudent> studentsByName;
 
         public Course(string name)
         {
             this.Name = name;
-            this.studentsByName = new Dictionary<string, Student>();
+            this.studentsByName = new Dictionary<string, IStudent>();
         }
 
         public string Name
@@ -31,9 +31,9 @@
             }
         }
 
-        public IReadOnlyDictionary<string, Student> StudentsByName => this.studentsByName;
+        public IReadOnlyDictionary<string, IStudent> StudentsByName => this.studentsByName;
 
-        public void EnrollStudent(Student student)
+        public void EnrollStudent(IStudent student)
         {
             Guard.WhenArgument(student, "student").IsNull().Throw();
 
