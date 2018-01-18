@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{ECEFF12A-4478-4463-959A-B900E934474D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BashSoft.Input</RootNamespace>
+    <AssemblyName>BashSoft.Input</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Bytes2you.Validation, Version=2.0.0.0, Culture=neutral, PublicKeyToken=a7d501dd757e0442, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Bytes2you.Validation.2.0.0.0\lib\portable-win+net40+sl40+wp+Xbox40\Bytes2you.Validation.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommandInterpreter.cs" />
+    <Compile Include="Commands\ChangeAbsolutePathCommand.cs" />
+    <Compile Include="Commands\ChangeRelativePathCommand.cs" />
+    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\CompareFilesCommand.cs" />
+    <Compile Include="Commands\Contracts\IExecutable.cs" />
+    <Compile Include="Commands\DropDatabaseCommand.cs" />
+    <Compile Include="Commands\GetHelpCommand.cs" />
+    <Compile Include="Commands\MakeDirectoryCommand.cs" />
+    <Compile Include="Commands\OpenFileCommand.cs" />
+    <Compile Include="Commands\PrintFilteredStudentsCommand.cs" />
+    <Compile Include="Commands\PrintOrderedStudentsCommand.cs" />
+    <Compile Include="Commands\ReadDatabaseCommand.cs" />
+    <Compile Include="Commands\ShowCourseCommand.cs" />
+    <Compile Include="Commands\TraverseFoldersCommand.cs" />
+    <Compile Include="Contracts\ICommandInterpreter.cs" />
+    <Compile Include="Contracts\IDirectoryChanger.cs" />
+    <Compile Include="Contracts\IDirectoryCreator.cs" />
+    <Compile Include="Contracts\IDirectoryManager.cs" />
+    <Compile Include="Contracts\IDirectoryTraverser.cs" />
+    <Compile Include="InputReader.cs" />
+    <Compile Include="IoManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BashSoft.Exceptions\BashSoft.Exceptions.csproj">
+      <Project>{AD316473-7438-4F1B-8EA1-89C695D76628}</Project>
+      <Name>BashSoft.Exceptions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BashSoft.Judge\BashSoft.Judge.csproj">
+      <Project>{C2FA7AA1-00C5-40D6-9911-8E9874EA7E81}</Project>
+      <Name>BashSoft.Judge</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BashSoft.Output\BashSoft.Output.csproj">
+      <Project>{C8F6CE0C-B27D-4F5A-A225-70769782CBEC}</Project>
+      <Name>BashSoft.Output</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BashSoft.Repositories\BashSoft.Repositories.csproj">
+      <Project>{C262F2AB-BBDE-4C76-A2A3-6BC31E5CA447}</Project>
+      <Name>BashSoft.Repositories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BashSoft.StaticData\BashSoft.StaticData.csproj">
+      <Project>{64D0CF1C-3510-4B3C-AC09-006730145699}</Project>
+      <Name>BashSoft.StaticData</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
