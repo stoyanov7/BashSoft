@@ -9,6 +9,8 @@
     {
         public const int NumberOfTasksOnExam = 5;
         public const int MaxScoreOnExamTask = 100;
+        private const int MinNameLength = 1;
+        private const int MaxNameLength = 30;
 
         private string name;
         private readonly Dictionary<string, IStudent> studentsByName;
@@ -26,7 +28,12 @@
             private set
             {
                 Guard.WhenArgument(value, "Name").IsNullOrEmpty().Throw();
-                
+
+                Guard.WhenArgument(value.Length, "Name")
+                    .IsLessThanOrEqual(MinNameLength)
+                    .IsGreaterThan(MaxNameLength)
+                    .Throw();
+
                 this.name = value;
             }
         }
@@ -35,7 +42,7 @@
 
         public void EnrollStudent(IStudent student)
         {
-            Guard.WhenArgument(student, "student").IsNull().Throw();
+            Guard.WhenArgument(student, "Student").IsNull().Throw();
 
             if (this.studentsByName.ContainsKey(student.Username))
             {
@@ -44,5 +51,9 @@
 
             this.studentsByName[student.Username] = student;
         }
+
+        public int CompareTo(ICourse other) => this.Name.CompareTo(other.Name);
+
+        public override string ToString() => this.Name;
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace BashSoft.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Bytes2you.Validation;
@@ -73,5 +74,9 @@
 
             return mark;
         }
+
+        public int CompareTo(IStudent other) => this.Username.CompareTo(other.Username);
+
+        public override string ToString() => this.Username;
     }
 }
