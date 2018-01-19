@@ -5,7 +5,7 @@
     using Output;
     using StaticData;
 
-    public class InputReader
+    public class InputReader : IReader
     {
         private const string QuitCommand = "quit";
         private const string ExitCommand = "exit";

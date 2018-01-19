@@ -49,6 +49,7 @@
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\CompareFilesCommand.cs" />
     <Compile Include="Commands\Contracts\IExecutable.cs" />
+    <Compile Include="Commands\DisplayCommand.cs" />
     <Compile Include="Commands\DropDatabaseCommand.cs" />
     <Compile Include="Commands\GetHelpCommand.cs" />
     <Compile Include="Commands\MakeDirectoryCommand.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Contracts\IDirectoryCreator.cs" />
     <Compile Include="Contracts\IDirectoryManager.cs" />
     <Compile Include="Contracts\IDirectoryTraverser.cs" />
+    <Compile Include="Contracts\IReader.cs" />
     <Compile Include="InputReader.cs" />
     <Compile Include="IoManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,6 +77,10 @@
     <ProjectReference Include="..\BashSoft.Judge\BashSoft.Judge.csproj">
       <Project>{C2FA7AA1-00C5-40D6-9911-8E9874EA7E81}</Project>
       <Name>BashSoft.Judge</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BashSoft.Models\BashSoft.Models.csproj">
+      <Project>{849B0CAA-33EF-4F0A-BD6A-AABF7A44E925}</Project>
+      <Name>BashSoft.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\BashSoft.Output\BashSoft.Output.csproj">
       <Project>{C8F6CE0C-B27D-4F5A-A225-70769782CBEC}</Project>

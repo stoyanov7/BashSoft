@@ -71,6 +71,8 @@
                     return new PrintOrderedStudentsCommand(input, data, this.tester, this.studentsRepository, this.inputOutputManager);
                 case "dropdb:":
                     return new DropDatabaseCommand(input, data, this.tester, this.studentsRepository, this.inputOutputManager);
+                case "display":
+                    return new DisplayCommand(input, data, this.tester, this.studentsRepository, this.inputOutputManager);
                 case "help":
                     return new GetHelpCommand(input, data, this.tester, this.studentsRepository, this.inputOutputManager);
                 default:
