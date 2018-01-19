@@ -52,6 +52,10 @@
     <Compile Include="StudentsRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BashSoft.DataStructures\BashSoft.DataStructures.csproj">
+      <Project>{3A469B0B-D968-4AD6-A6DB-5777B09323B1}</Project>
+      <Name>BashSoft.DataStructures</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BashSoft.Exceptions\BashSoft.Exceptions.csproj">
       <Project>{AD316473-7438-4F1B-8EA1-89C695D76628}</Project>
       <Name>BashSoft.Exceptions</Name>

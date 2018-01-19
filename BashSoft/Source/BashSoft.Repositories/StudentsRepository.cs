@@ -6,6 +6,8 @@
     using System.Linq;
     using System.Text.RegularExpressions;
     using Contracts;
+    using DataStructures;
+    using DataStructures.Contracts;
     using Exceptions;
     using Models;
     using Models.Contracts;
@@ -116,6 +118,22 @@
                     new KeyValuePair<string, double>(
                         username,this.courses[courseName].StudentsByName[username].MarksByCourseName[courseName]));
             }
+        }
+
+        public ISimpleOrderedBag<ICourse> GetAllCoursesSorted(IComparer<ICourse> cmp)
+        {
+            var sortedCourses = new SimpleSortedList<ICourse>();
+            sortedCourses.AddAll(this.courses.Values);
+
+            return sortedCourses;
+        }
+
+        public ISimpleOrderedBag<IStudent> GetAllStudentsSorted(IComparer<IStudent> cmp)
+        {
+            var sortedStudents = new SimpleSortedList<IStudent>();
+            sortedStudents.AddAll(this.students.Values);
+
+            return sortedStudents;
         }
 
         /// <summary>
