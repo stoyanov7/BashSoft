@@ -4,6 +4,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Text;
+    using Bytes2you.Validation;
     using Contracts;
 
     public class SimpleSortedList<T> : ISimpleOrderedBag<T>
@@ -36,11 +37,17 @@
         {
         }
 
-
         public int Size => this.size;
+
+        public int Capacity => this.innerCollection.Length;
 
         public void Add(T element)
         {
+            if (element == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             if (this.innerCollection.Length == this.Size)
             {
                 this.Resize();
@@ -53,6 +60,8 @@
 
         public void AddAll(ICollection<T> collection)
         {
+            Guard.WhenArgument(collection, "Collection").IsNull().Throw();
+
             if (this.Size + collection.Count >= this.innerCollection.Length)
             {
                 this.MultiResize(collection);
@@ -65,6 +74,41 @@
             }
 
             Array.Sort(this.innerCollection, 0, this.Size, this.comparison);
+        }
+
+        public bool Remove(T element)
+        {
+            if (element == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            var hasBeenRemoved = false;
+            var indexOfRemovedElement = 0;
+
+            for (var i = 0; i < this.Size; i++)
+            {
+                if (this.innerCollection[i].Equals(element))
+                {
+                    indexOfRemovedElement = i;
+                    this.innerCollection[i] = default(T);
+                    hasBeenRemoved = true;
+                    break;
+                }
+            }
+
+            if (hasBeenRemoved)
+            {
+                for (var i = indexOfRemovedElement; i < this.Size - 1; i++)
+                {
+                    this.innerCollection[i] = this.innerCollection[i + 1];
+                }
+
+                this.innerCollection[this.Size - 1] = default(T);
+                this.size--;
+            }
+
+            return hasBeenRemoved;
         }
 
         public string JoinWith(string joiner)
